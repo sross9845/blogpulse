@@ -2,3 +2,18 @@
 <h3>Created by: <%= author.name%></h3>
 <hr>
 <p><%= post.content%></p>
+
+<h2>Comments</h2>
+<% comments.forEach(function(comment) { %>
+    <hr>
+    <p><%= comment.name%></p>
+    <p>Comment: <%= comment.content%></p>
+    <hr>
+<% }) %>
+<form method="POST" action="/posts/<%= post.id%>/comments">
+    <label for="name">Name:</label>
+    <input type="text" name="name">
+    <label for="content">Comment:</label>
+    <input type="text" name="content">
+    <input type="submit" value="Submit comment">
+</form>
