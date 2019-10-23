@@ -11,6 +11,8 @@ app.use(ejsLayouts)
 
 app.use('/authors', require('./routes/authors'))
 app.use('/posts', require('./routes/posts'))
+app.use('/tags', require('./routes/tags'))
+
 
 app.get('/', function(req,res){
     res.render('index')

@@ -10,19 +10,12 @@ router.get('/', function(req,res){
 })
 
 router.get('/:id', function(req,res){
-    db.post.findByPk(parseInt(req.params.id))
+    db.post.findByPk(parseInt(req.params.id), {include: [db.author, db.comment, db.tag]})
     .then(function(post){
-        post.getAuthor()
-        .then(function(author){
-        db.comment.findAll({
-            where: { postId: post.id }
-        })
-        .then(function(comments){
-            res.render('posts/show', { post, comments, author })
+            res.render('posts/show', {post});
         })
     })
-})
-})
+
 
 
 router.post('/:id/comments', function(req,res){
@@ -32,8 +25,11 @@ router.post('/:id/comments', function(req,res){
         postId : req.params.id
         }).then(function(){
             res.redirect(`/posts/${req.params.id}`);
-        });
+        }).catch(function(err){
+            res.send(err.message)
+        })
     });
+
 
 router.get('/new', function(req,res){
         res.render('posts/new')

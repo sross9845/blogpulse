@@ -1,19 +1,31 @@
-<h2><%= post.title %></h2>
-<h3>Created by: <%= author.name%></h3>
+<h1><%= post.title %></h1>
+<h3>Created by: <%= post.author.name%></h3>
 <hr>
 <p><%= post.content%></p>
 
-<h2>Comments</h2>
-<% comments.forEach(function(comment) { %>
+<p>Tags:</p>
+<ul>
+    <%post.tags.forEach(function(tag) {%>
+        <li><%= tag.name %></li>
+    <% });%>
+</ul>
+<form action="/tags" method="POST">
+    <input type="text" name="name" placeholder="Add a tag to this post"><br>
+    <input type="hidden" name="postId" value="<%= post.id%>">
+    <input type="submit" value="Tag It!">
+</form>
+
+<h1>Comments</h1>
+<% post.comments.forEach(function(comment) { %>
     <hr>
     <p><%= comment.name%></p>
     <p>Comment: <%= comment.content%></p>
     <hr>
 <% }) %>
-<form method="POST" action="/posts/<%= post.id%>/comments">
+<form id="form" method="POST" action="/posts/<%= post.id%>/comments">
     <label for="name">Name:</label>
     <input type="text" name="name">
     <label for="content">Comment:</label>
     <input type="text" name="content">
-    <input type="submit" value="Submit comment">
+    <input id="submit" type="submit" value="Submit comment">
 </form>
